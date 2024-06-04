@@ -6,7 +6,6 @@ export const loadSubwayDbState = () => {
     }
     return JSON.parse(serialState);
   } catch (err) {
-    console.log(err);
     return { ids: [], entities: {} };
   }
 };
@@ -16,7 +15,5 @@ export const saveSubwayDbState = (state: { id: number[] }) => {
     const serialState = JSON.stringify(state);
     localStorage.setItem("subwayDb", serialState);
     localStorage.setItem("version", "1");
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };

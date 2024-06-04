@@ -14,6 +14,7 @@ import {
 } from "../../models/etaJson.js";
 import { settingsRedux, stopBookmarksRedux } from "../../models/etaObjects.js";
 import { SubwayStations, SubwayStop } from "../../models/ttc.js";
+import { StopRequest } from "../../models/yrt.js";
 import { store } from "../../store/index.js";
 import { settingsSelectors } from "../../store/settings/slice.js";
 import { fluentStyles } from "../../styles/fluent.js";
@@ -26,7 +27,8 @@ export default function RawDisplay(props: {
     | settingsRedux
     | stopBookmarksRedux
     | SubwayStations
-    | SubwayStop;
+    | SubwayStop
+    | StopRequest;
 }) {
   const fluentStyle = fluentStyles();
   const { t } = useTranslation();

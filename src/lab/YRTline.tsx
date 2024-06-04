@@ -2,9 +2,9 @@ import { Accordion, Title2 } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import { YRTStopAccordions } from "../components/accordions/StopAccordions";
-import { YRTBadge } from "../components/badges";
-import { LineList, LineRequest } from "../models/yrt";
+import { YRTStopAccordions } from "../components/accordions/StopAccordions.js";
+import { YRTBadge } from "../components/badges.js";
+import { LineList, LineRequest } from "../models/yrt.js";
 
 export default function YRTLine() {
   const params = useParams();
@@ -14,18 +14,17 @@ export default function YRTLine() {
   const { state } = useLocation();
   const { directions, lineName, lineNum } = state;
   const translateDirId = (dirId: number) => {
-    console.log(dirId);
     return directions.get(dirId);
   };
   useEffect(() => {
-    document.title = `YRT arrivals`;
+    document.title = "YRT arrivals";
   });
   useEffect(() => {
     const controller = new AbortController();
 
     const fetchEtaData = async () => {
       let response = {};
-      await fetch(`https://tripplanner.yrt.ca/TI_FixedRoute_Line`, {
+      await fetch("https://tripplanner.yrt.ca/TI_FixedRoute_Line", {
         signal: controller.signal,
         method: "POST",
         headers: {
@@ -66,18 +65,20 @@ export default function YRTLine() {
 
   if (Array.isArray(lineList) && lineList.length)
     for (const i in lineList) {
-      const item = lineList[i];
-      lineRows.push(
-        <li key={i}>
-          <YRTStopAccordions
-            title={translateDirId(item.lineDirId)}
-            direction={translateDirId(item.lineDirId)}
-            lineNum={1}
-            result={item.stops}
-            tag={i}
-          />
-        </li>
-      );
+      if (Object.prototype.hasOwnProperty.call(lineList, i)) {
+        const item = lineList[i];
+        lineRows.push(
+          <li key={i}>
+            <YRTStopAccordions
+              title={translateDirId(item.lineDirId)}
+              direction={translateDirId(item.lineDirId)}
+              lineNum={1}
+              result={item.stops}
+              tag={i}
+            />
+          </li>
+        );
+      }
     }
 
   return (

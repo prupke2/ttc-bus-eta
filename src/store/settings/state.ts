@@ -6,7 +6,6 @@ export const loadSettingsState = () => {
     }
     return JSON.parse(serialState);
   } catch (err) {
-    console.log(err);
     return { ids: [], entities: {} };
   }
 };
@@ -19,7 +18,5 @@ export const saveSettingsState = (state: {
     const serialState = JSON.stringify(state);
     localStorage.setItem("appSettings", serialState);
     localStorage.setItem("version", "1");
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
